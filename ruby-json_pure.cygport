@@ -1,8 +1,22 @@
 inherit rubygem
 
 NAME="ruby-json_pure"
-VERSION=1.8.0
+VERSION=1.8.1
 RELEASE=1
 CATEGORY="Ruby"
 SUMMARY="Pure Ruby JSON module"
-DESCRIPTION="This is a JSON implementation in pure Ruby."
+DESCRIPTION="This is a JSON implementation as a pure Ruby extension."
+
+ARCH=noarch
+
+PKG_NAMES="${NAME} ${NAME}-doc"
+ruby_json_pure_CONTENTS=${RUBYGEM_INSTDIR#/}" "${RUBYGEM_SPEC#/}
+ruby_json_pure_doc_CONTENTS=${RUBYGEM_DOCDIR#/}
+
+src_install() {
+	cd ${S}
+	rubygem_install
+
+	rm -fr ${D}${RUBYGEM_INSTDIR}/{diagrams,java,tests}/
+	rm -fr ${D}${RUBYGEM_INSTDIR}/lib/json/ext*
+}
